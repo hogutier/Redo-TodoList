@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import TodoForm from './TodoForm'
 
 export default class CreateTodo extends Component {
   constructor() {
     super()
     this.state = {
       taskName: '',
-      assignee: ''
+      assignee: '',
+      error: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,25 +22,30 @@ export default class CreateTodo extends Component {
 
   async handleSubmit (event){
     event.preventDefault()
-    const res = await axios.post('/api/todos/', this.state)
-    this.props.addTodo(res.data)
-    this.setState({
-      taskName: '',
-      assignee: ''
-    })
+    try {
+      const res = await axios.post('/api/todos/', this.state)
+      this.props.addTodo(res.data)
+      this.setState({
+        taskName: '',
+        assignee: ''
+      })
+    } catch (error) {
+      this.setState({
+        error
+      })
+    }
+
   }
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor='taskName'>Task Name</label>
-        <input type='text' name='taskName' onChange={this.handleChange} value={this.state.taskName} />
-
-        <label htmlFor='assignee'>Assign To:</label>
-        <input type='text' name='assignee' onChange={this.handleChange} value={this.state.assignee} />
-
-        <button type='submit'>Submit</button>
-      </form>
+      <TodoForm
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        taskName={this.state.taskName}
+        assignee={this.state.assignee}
+        error={this.state.error}
+      />
     )
   }
 }

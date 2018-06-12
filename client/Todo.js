@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Todo = (props) => {
   const todo = props.todo
-  const showRemoveButton = props.removeTodo ? 'remove' : 'hide'
+  const showRemoveButton = props.removeTodo
 
   return (
     <div className='todo row' key={todo.id}>
@@ -14,10 +14,9 @@ const Todo = (props) => {
         <p>Assigned to: {todo.assignee}</p>
       </div>
       <div className='column'>
-        <button
-          className={showRemoveButton}
-          onClick={() => props.removeTodo(todo.id)}>Remove
-        </button>
+          {
+            showRemoveButton && <button className='remove' onClick={() => props.removeTodo(todo.id)}>Remove </button>
+          }
       </div>
     </div>
   )

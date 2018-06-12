@@ -1,11 +1,10 @@
 import React from 'react'
 
 const TodoForm = (props) => {
-  const {handleSubmit, handleChange, taskName, assignee} = props
+  const {handleSubmit, handleChange, taskName, assignee, error} = props
   const isEmpty = !taskName || !assignee
   const validateTask = taskName ? 'hide' : 'warning'
   const validateAssignee = assignee ? 'hide' : 'warning'
-  const hasError = props.error ? 'error' : 'hide'
 
   return (
     <form onSubmit={handleSubmit}>
@@ -20,7 +19,9 @@ const TodoForm = (props) => {
     <input type='text' name='assignee' onChange={handleChange} value={assignee} />
 
     <button type='submit' disabled={isEmpty}>Submit</button>
-    <div className={hasError}>Network Error: Unable to perform action.</div>
+    {
+      error && <div className='error'>{error}</div>
+    }
   </form>
   )
 }

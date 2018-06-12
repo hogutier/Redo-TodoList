@@ -31,7 +31,7 @@ export default class CreateTodo extends Component {
       })
     } catch (error) {
       this.setState({
-        error
+        error: 'Unable to perform action: ' + error.message
       })
     }
 
@@ -42,9 +42,7 @@ export default class CreateTodo extends Component {
       <TodoForm
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
-        taskName={this.state.taskName}
-        assignee={this.state.assignee}
-        error={this.state.error}
+        {...this.state}
       />
     )
   }

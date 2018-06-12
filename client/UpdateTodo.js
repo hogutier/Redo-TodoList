@@ -27,7 +27,9 @@ export default class UpdateTodo extends Component {
       this.props.updateTodo(res.data)
       this.setState({
         taskName: '',
-        assignee: ''
+        assignee: '',
+        warningMessage: '',
+        error: ''
       })
     } catch (error) {
       this.setState({
@@ -40,7 +42,8 @@ export default class UpdateTodo extends Component {
   componentWillReceiveProps (nextProps){
     this.setState({
       taskName: nextProps.todo.taskName,
-      assignee: nextProps.todo.assignee
+      assignee: nextProps.todo.assignee,
+      warningMessage: 'Field is required'
     })
   }
 
@@ -49,9 +52,7 @@ export default class UpdateTodo extends Component {
       <TodoForm
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
-        taskName={this.state.taskName}
-        assignee={this.state.assignee}
-        error={this.state.error}
+        {...this.state}
       />
     )
   }

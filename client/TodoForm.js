@@ -1,20 +1,24 @@
 import React from 'react'
 
 const TodoForm = (props) => {
-  const {handleSubmit, handleChange, taskName, assignee, error} = props
+  const {handleSubmit, handleChange, taskName, assignee, error, warningMessage} = props
   const isEmpty = !taskName || !assignee
-  const validateTask = taskName ? 'hide' : 'warning'
-  const validateAssignee = assignee ? 'hide' : 'warning'
 
   return (
     <form onSubmit={handleSubmit}>
-    <label htmlFor='taskName'>Task Name:
-       <span className={validateTask}>Field is required!</span>
+    <label htmlFor='taskName'>
+      Task Name:
+      {
+        !taskName && warningMessage && <span className='warning'>Field is required!</span>
+      }
     </label>
     <input type='text' name='taskName' onChange={handleChange} value={taskName} />
 
-    <label htmlFor='assignee'>Assign To:
-    <span className={validateAssignee}>Field is required!</span>
+    <label htmlFor='assignee'>
+      Assign To:
+      {
+        !assignee && warningMessage && <span className='warning'>Field is required!</span>
+      }
     </label>
     <input type='text' name='assignee' onChange={handleChange} value={assignee} />
 
